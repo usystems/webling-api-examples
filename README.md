@@ -1,2 +1,4 @@
 # webling-api-examples
-Examples for the webling REST API. For more information see: https://demo.webling.ch/api/ 
+Example scripts for interacting with the webling API. 
+
+REST API documentation: https://demo.webling.ch/api/ 
