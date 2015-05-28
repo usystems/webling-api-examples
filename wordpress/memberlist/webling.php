@@ -26,7 +26,7 @@ DEFINE("WEBLING_OPTIONS_GROUP", "webling-options-group");
 DEFINE("WEBLING_MENU_SLUG", "webling-menu");
 
 if ( is_admin() )
-	require_once dirname( __FILE__ ) . '/admin.php';
+	require_once dirname(__FILE__) . '/admin.php';
 
 //tell wordpress to register the memberlist shortcode
 add_shortcode("webling_memberlist", "webling_memberlist_handler");
