@@ -84,15 +84,13 @@
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>Karte der Mitglieder</title>
+	<title>Display members on map</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=visualization" type="text/javascript"></script>
-
-	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
 </head>
 
@@ -104,20 +102,20 @@
 			var markers = [];
 			var bounds = new google.maps.LatLngBounds();		
 			var map = new google.maps.Map(document.getElementById("map"), {
-				mapTypeId: 'roadmap',
+				mapTypeId: "roadmap",
 				mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
 			});
 			var infoWindow = new google.maps.InfoWindow();
 			jsonData.forEach(function(data) {
-				var latlng = new google.maps.LatLng(data['lat'], data['lng']);
+				var latlng = new google.maps.LatLng(data["lat"], data["lng"]);
 				bounds.extend(latlng);
 
-				var html = "<b>" + data['name'] + "</b> <br/>" + data['address'];
+				var html = "<b>" + data["name"] + "</b> <br/>" + data["address"];
 				var marker = new google.maps.Marker({
 					map: map,
 					position: latlng
 				});
-				google.maps.event.addListener(marker, 'click', function() {
+				google.maps.event.addListener(marker, "click", function() {
 					infoWindow.setContent(html);
 					infoWindow.open(map, marker);
 				});
