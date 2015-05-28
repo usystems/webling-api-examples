@@ -5,8 +5,6 @@ if (!function_exists('add_action')) {
 	exit;
 }
 
-require_once dirname( __FILE__ ) . "/common.php";
-
 add_action('admin_init', 'webling_admin_init');
 
 function webling_admin_init() {

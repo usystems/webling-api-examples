@@ -19,7 +19,6 @@ if ( !function_exists( 'add_action' ) ) {
 	echo '';
 	exit;
 }
-require_once dirname( __FILE__ ) . "/common.php";
 
 DEFINE("WEBLING_OPTIONS", "webling-options");
 DEFINE("WEBLING_OPTIONS_GROUP", "webling-options-group");
