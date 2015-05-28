@@ -57,7 +57,7 @@ function webling_admin_options_page(){
 
 	echo '<div class="wrap">
         <h2>Webling Optionen</h2>
-        <p>Die Webling Mitgliederliste wird automatisch vom angegebenen Server geladen und kann mit dem Shortcode [webling_mitgliederliste] anzeigt werden. 
+        <p>Die Webling Mitgliederliste wird automatisch vom angegebenen Server geladen und kann mit dem Shortcode [webling_memberlist] anzeigt werden.
         <p/>
         <form method="post" action="options.php" id="webling-form">';
             echo settings_fields(WEBLING_OPTIONS_GROUP);

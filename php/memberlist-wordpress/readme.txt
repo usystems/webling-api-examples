@@ -8,13 +8,13 @@ Stable tag: trunk
 License: Aapache License
 License URI: http://www.apache.org/licenses/LICENSE-2.0.html
 
-Webling Mitgliederliste für Wordpress Webseiten 
+Webling memberlist for Wordpress Webpages
 
 == Description ==
 
-Mitgliederliste für Webling Nutzer. 
-Um das Plugin zu verwenden, benutze den Shortcode [mitgliederliste] auf einer Contentseite.
-Einige Einstellungen müssen im Adminbereich gemacht werden.
+Memberlist for Webling users..
+To use the plugin, use the schortcode [webling_memberlist] on the contentpage.
+Some configurations needs to be made on the admin pages.
 
 == Installation ==
 

@@ -28,14 +28,14 @@ DEFINE("WEBLING_MENU_SLUG", "webling-menu");
 if ( is_admin() )
 	require_once dirname( __FILE__ ) . '/admin.php';
 
-//tell wordpress to register the mitgliederliste shortcode
-add_shortcode("webling_mitgliederliste", "webling_mitgliederliste_handler");
+//tell wordpress to register the memberlist shortcode
+add_shortcode("webling_memberlist", "webling_memberlist_handler");
 add_action('wp_head', 'webling_css');
 
-function webling_mitgliederliste_handler() {
+function webling_memberlist_handler() {
 	$output = webling_liste();
 
-	return '<div id="webling_mitgliederliste">'.$output.'<div>';
+	return '<div id="webling_memberlist">'.$output.'<div>';
 }
 
 function webling_get_data($url) {
@@ -53,7 +53,7 @@ function webling_liste() {
 
     try {
 
-		echo '<table id="webling-mitgliederliste">';
+		echo '<table id="webling-memberlist">';
 
 				echo '<tr>';
 				foreach ($options['fieldarray'] as $field) {
@@ -79,7 +79,7 @@ function webling_liste() {
 		echo '</table>';
 
     } catch (Exception $e) {
-    	echo '<p>Mitgliederliste konnte nicht geladen werden</p>';
+    	echo '<p>Memberlist cannot be loaded</p>';
     }
 }
 
