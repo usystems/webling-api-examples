@@ -4,7 +4,7 @@
 	 * Add a key for your webling REST API.
 	 * https://demo.webling.ch/api/
 	 */
-	$apikey = "<yourapikey>";
+	$apiKey = "<yourapikey>";
 
 	/**
 	 * The domain of your webling account
