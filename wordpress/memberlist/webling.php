@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Webling
-Plugin URI: http://www.webling.eu
+Plugin URI: https://www.webling.eu
 Description: Webling Mitgliederliste Plugin
-Version: 1.0
+Version: 1.1
 Author: uSystems GmbH
 Author URI: http://www.usystems.ch
 */
@@ -28,11 +28,25 @@ if ( is_admin() )
 	require_once dirname(__FILE__) . '/admin.php';
 
 //tell wordpress to register the memberlist shortcode
-add_shortcode("webling_memberlist", "webling_memberlist_handler");
+add_shortcode('webling_memberlist', 'webling_memberlist_handler');
 add_action('wp_head', 'webling_css');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'add_action_links');
 
-function webling_memberlist_handler() {
-	$output = webling_liste();
+function add_action_links($links) {
+	$mylinks = array(
+		'<a href="' . admin_url( 'options-general.php?page='. WEBLING_MENU_SLUG ) . '">Einstellungen</a>',
+	);
+	return array_merge($links, $mylinks);
+}
+
+function webling_memberlist_handler($atts) {
+
+	// allow shortcode attribute to filter for groups="12,56,34"
+	$webling_memberlist_atts = shortcode_atts( array(
+		'groups' => null
+	), $atts );
+
+	$output = webling_liste($webling_memberlist_atts);
 
 	return '<div id="webling_memberlist">'.$output.'<div>';
 }
@@ -46,11 +60,11 @@ function webling_get_data($url) {
 	return $data;
 }
 
-function webling_liste() {
+function webling_liste($attributes) {
 
 	$options = webling_get_config();
 
-    try {
+	try {
 
 		echo '<table id="webling-memberlist">';
 
@@ -61,10 +75,27 @@ function webling_liste() {
 
 				echo '</tr>';
 
-				$memberIds = webling_get_data($options["host"] . "/api/1/member?apikey=" . $options["apikey"])["objects"];
-
-				if (is_array($memberIds) == false) {
-					throw new Exception("Cannot connect to API");
+				if($attributes['groups']){
+					// filter groups
+					$groupIds = explode(',',$attributes['groups']);
+					$memberIds = [];
+					if(is_array($groupIds) && count($groupIds)){
+						foreach ($groupIds as $groupId){
+							$data = webling_get_data($options["host"] . "/api/1/membergroup/".intval(trim($groupId))."?apikey=" . $options["apikey"]);
+							if (!is_array($memberIds)) {
+								throw new Exception("Cannot connect to API");
+							}
+							if (isset($data["children"]['member'])){
+								$memberIds = array_merge($memberIds, $data["children"]['member']);
+							}
+						}
+						$memberIds = array_unique($memberIds);
+					}
+				} else {
+					$memberIds = webling_get_data($options["host"] . "/api/1/member?apikey=" . $options["apikey"])["objects"];
+					if (is_array($memberIds) == false) {
+						throw new Exception("Cannot connect to API");
+					}
 				}
 
 				foreach ($memberIds as $memberId) {
@@ -77,9 +108,9 @@ function webling_liste() {
 				}
 		echo '</table>';
 
-    } catch (Exception $e) {
-    	echo '<p>Memberlist cannot be loaded</p>';
-    }
+	} catch (Exception $e) {
+		echo '<p>Memberlist cannot be loaded</p>';
+	}
 }
 
 function webling_get_config() {
