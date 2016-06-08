@@ -78,7 +78,7 @@ function webling_liste($attributes) {
 				if($attributes['groups']){
 					// filter groups
 					$groupIds = explode(',',$attributes['groups']);
-					$memberIds = [];
+					$memberIds = array();
 					if(is_array($groupIds) && count($groupIds)){
 						foreach ($groupIds as $groupId){
 							$data = webling_get_data($options["host"] . "/api/1/membergroup/".intval(trim($groupId))."?apikey=" . $options["apikey"]);
