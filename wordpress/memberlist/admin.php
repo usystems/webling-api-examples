@@ -42,7 +42,7 @@ function webling_admin_fieldlist() {
             </script>
             <ul id="webling-sortable">';
 
-    foreach (array_keys($config["member"]["properties"]) as $field) {
+    foreach (array_keys($config["definitions"]["member"]["properties"]) as $field) {
         $output .= '<li><input type="checkbox" id="check' . $field . '" value="' . $field . '" />' . $field . '</li>';
     }
 
