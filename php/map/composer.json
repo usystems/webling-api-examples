@@ -1,0 +1,5 @@
+{
+    "require": {
+        "usystems/webling-api-php": "^1.0"
+    }
+}
