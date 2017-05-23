@@ -85,14 +85,16 @@ class WeblingMap {
 	}
 
 	private function getAddress(Int $memberId) {
-		$member = $this->getMember($memberId);
-
-		return $member["properties"][$this->config['addressName']] . ", " . $member["properties"][$this->config['cityName']] . ", " . $this->config['country'];
+		return $this->memberProperty($memberId,'addressName') . ", " . $this->memberProperty($memberId,'cityName') . ", " . $this->config['defaultCountry'];
 	}
 
 	private function getName(Int $memberId) {
+		return $this->memberProperty($memberId,'firstName') . " " . $this->memberProperty($memberId,'lastName');
+	}
+
+	private function memberProperty($memberId, $property) {
 		$member = $this->getMember($memberId);
-		return $member["properties"][$this->config['firstName']] . " " . $member["properties"][$this->config['lastName']];
+		return $member["properties"][$this->config['weblingProperty'][$property]];
 	}
 
 	private function getData(String $url) {

@@ -10,15 +10,20 @@
 	 */
 	$domain = "https://<yourdomain>.webling.ch";
 
-	/**
-	 * These are the filed names for the Properties used to show the persons on the web
-	 */
-	$propertiesInWebling = array(
-		'firstName' => 'Vorname',
-		'lastName' => 'Name',
-		'addressName' => 'Strasse',
-		'cityName' => 'Ort',
-		'country' => 'Schweiz'
+	$config = array(
+		/**
+		 * These are the filed names for the Properties used to show the persons on the web
+		 */
+		'weblingProperty' => array(
+			'firstName' => 'Vorname',
+			'lastName' => 'Name',
+			'addressName' => 'Strasse',
+			'cityName' => 'Ort'
+		),
+		/**
+		 * Country the address should be searched in
+		 */
+		'defaultCountry' => 'Schweiz'
 	);
 
 	/**

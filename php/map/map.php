@@ -5,7 +5,7 @@ require_once("vendor/autoload.php");
 
 require_once("WeblingMap.php");
 
-$map = new WeblingMap($domain, $weblingApiKey, $mapsApiKey, $propertiesInWebling);
+$map = new WeblingMap($domain, $weblingApiKey, $mapsApiKey, $config);
 $map->loadLocations();
 
 ?>
