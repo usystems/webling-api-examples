@@ -25,7 +25,7 @@ class WeblingMap {
 	public function loadLocations() {
 		//reset data
 		$this->locations = [];
-		$this->faultyLocations = [];
+		$this->locationErrors = [];
 
 		$memberIds = $this->getMembers();
 
@@ -48,7 +48,7 @@ class WeblingMap {
 				"lng" => $geometry["location"]["lng"]
 			);
 		} else {
-			$this->logLocationError($memberId, $mapData['status']);		
+			$this->logLocationError($memberId, $mapData['status']);
 		}
 	}
 
@@ -60,7 +60,7 @@ class WeblingMap {
 		return array("location_type" => null);
 	}
 
-    private function logLocationError(Int $memberId, String $status) {
+	private function logLocationError(Int $memberId, String $status) {
 		if ($status == 'OVER_QUERY_LIMIT') {
 			$error = "Too many requests";
 		} else {
@@ -95,7 +95,7 @@ class WeblingMap {
 		return $member["properties"][$this->config['firstName']] . " " . $member["properties"][$this->config['lastName']];
 	}
 
-    private function getData(String $url) {
+	private function getData(String $url) {
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
