@@ -12,7 +12,7 @@
 	$domain = "https://<yourdomain>.webling.ch";
 
 	/**
-	 * Fields you want to diesplay
+	 * Fields you want to display
 	 */
 	$fields = array("Strasse", "PLZ", "Ort");
 
