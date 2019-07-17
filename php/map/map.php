@@ -52,7 +52,7 @@ $map->loadLocations();
 	</script>
 
 	<div id="map" style="width: 80%; height: 100%"></div>
-	<div id="log" style="width: 19%; height: 100%; position: absolute; right: 0; top: 10px;">
+	<div id="log" style="width: 19%; height: 100%; position: absolute; right: 0; top: 0; overflow: auto;">
 		<h2>Unresolved Addresses</h2>
 		<?php
 			foreach ($map->getLocationErrors() as $locationError) {

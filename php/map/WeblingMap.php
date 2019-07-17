@@ -27,28 +27,28 @@ class WeblingMap {
 		$this->locations = [];
 		$this->locationErrors = [];
 
-		$memberIds = $this->getMembers();
+		$members = $this->getMembers();
 
-		foreach ($memberIds as $memberId) {
-			$this->loadMemberLocation($memberId);
+		foreach ($members as $member) {
+			$this->loadMemberLocation($member);
 		}
 	}
 
-	private function loadMemberLocation(Int $memberId) {
+	private function loadMemberLocation($member) {
 		$mapData = $this->getData("https://maps.googleapis.com/maps/api/geocode/json" .
-				"?address=" . urlencode($this->getAddress($memberId)) . "&sensor=false&key=" . $this->mapsApiKey);
+				"?address=" . urlencode($this->getAddress($member)) . "&sensor=false&key=" . $this->mapsApiKey);
 
 		$geometry = $this->geometryFromMapData($mapData);
 
 		if ($geometry["location_type"] == "ROOFTOP") {
 			$this->locations[] = array (
-				"name" => $this->getName($memberId),
-				"address" => $this->getAddress($memberId),
+				"name" => $this->getName($member),
+				"address" => $this->getAddress($member),
 				"lat" => $geometry["location"]["lat"],
 				"lng" => $geometry["location"]["lng"]
 			);
 		} else {
-			$this->logLocationError($memberId, $mapData['status']);
+			$this->logLocationError($member, $mapData['status']);
 		}
 	}
 
@@ -60,7 +60,7 @@ class WeblingMap {
 		return array("location_type" => null);
 	}
 
-	private function logLocationError(Int $memberId, String $status) {
+	private function logLocationError($member, String $status) {
 		if ($status == 'OVER_QUERY_LIMIT') {
 			$error = "Too many requests";
 		} else {
@@ -68,33 +68,31 @@ class WeblingMap {
 		}
 
 		$this->locationErrors[] = array (
-			"name" =>$this->getName($memberId),
-			"address" => $this->getAddress($memberId),
+			"name" =>$this->getName($member),
+			"address" => $this->getAddress($member),
 			"error" => $error
 		);
 	}
 	
 	private function getMembers() {
-		$members = $this->api->get('member');
-		return $members->getData()['objects'];
+		$members = $this->api->get('member?format=full');
+		return $members->getData();
 	}
 
-	private function getMember(Int $memberId) {
-		$member = $this->api->get('member/' . $memberId);
-		return $member->getData();
+	private function getAddress($member) {
+		$address  = $member["properties"][$this->config['weblingProperty']['addressName']];
+		$address .= ', ';
+		$address .= $member["properties"][$this->config['weblingProperty']['cityName']];
+		$address .= ', ';
+		$address .= $member["properties"][$this->config['weblingProperty']['defaultCountry']];
+		return $address;
 	}
 
-	private function getAddress(Int $memberId) {
-		return $this->memberProperty($memberId,'addressName') . ", " . $this->memberProperty($memberId,'cityName') . ", " . $this->config['defaultCountry'];
-	}
-
-	private function getName(Int $memberId) {
-		return $this->memberProperty($memberId,'firstName') . " " . $this->memberProperty($memberId,'lastName');
-	}
-
-	private function memberProperty($memberId, $property) {
-		$member = $this->getMember($memberId);
-		return $member["properties"][$this->config['weblingProperty'][$property]];
+	private function getName($member) {
+		$name  = $member["properties"][$this->config['weblingProperty']['firstName']];
+		$name .= ' ';
+		$name .= $member["properties"][$this->config['weblingProperty']['lastName']];
+		return $name;
 	}
 
 	private function getData(String $url) {
