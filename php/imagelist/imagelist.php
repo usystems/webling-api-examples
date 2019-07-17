@@ -21,8 +21,9 @@ function getData($url) {
 	return $data;
 }
 
-$memberIds = getData(WEBLING_DOMAIN . "/api/1/member?apikey=" . WEBLING_APIKEY)["objects"];
-if (is_array($memberIds) == false) {
+// add the "format=full" parameter to load all member details
+$memberData = getData(WEBLING_DOMAIN . "/api/1/member?format=full&apikey=" . WEBLING_APIKEY);
+if (is_array($memberData) == false) {
 	die("Error connectiong to API");
 }
 ?>
@@ -40,12 +41,11 @@ if (is_array($memberIds) == false) {
 <body>
 	<div class="row">
 		<?php
-			foreach ($memberIds as $memberId) {
-				$member = getData(WEBLING_DOMAIN . "/api/1/member/" . $memberId . "?apikey=" . WEBLING_APIKEY);
+			foreach ($memberData as $member) {
 				echo '<div class="col-sm-4 col-md-3">';
 				echo '<div class="thumbnail">';
 				if (isset($member["properties"][$imageField]['name'])) {
-					echo '<img src="get_image.php?memberId='.$memberId.'&filename='.$member["properties"][$imageField]['name'].'" />';
+					echo '<img src="get_image.php?memberId='.$member['id'].'&filename='.$member["properties"][$imageField]['name'].'" />';
 				}
 				echo '<div class="caption">';
 				echo '<h3>'.$member["properties"][$nameField].'</h3>';
