@@ -4,62 +4,62 @@
 	<meta charset="utf-8">
 	<title>Webling Membergroup List Example</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 	<script>
 
-        /**
-         * Add a key for your webling REST API.
-         * https://demo.webling.ch/api/
+		/**
+		 * Add a key for your webling REST API.
+		 * https://demo.webling.ch/api/
 		 *
 		 * WARNING: Don’t use this example in production, as the Apikey is exposed to the user!
-         */
+		 */
 		var apikey = "<yourapikey>";
 
-        /**
-         * The domain of your webling account
-         */
+		/**
+		 * The domain of your webling account
+		 */
 		var domain = "https://<yourdomain>.webling.ch";
 
 		// when the document is ready start to call the api
 		$(document).ready(function(){
 
-            // fetch the list of all ids of accessible member groups
-            // https://demo.webling.ch/api/#membergroup-membergroup-list-get
+			// fetch the list of all ids of accessible member groups
+			// https://demo.webling.ch/api/#membergroup-membergroup-list-get
 			$.ajax(domain + "/api/1/membergroup?apikey=" + apikey).then(
-                function(groups) {
+				function(groups) {
 
-				    // loop over the membergroups and display the titles and its ids
-				    groups.objects.forEach(function(groupId) {
+					// loop over the membergroups and display the titles and its ids
+					groups.objects.forEach(function(groupId) {
 
-                        // add a list entry for each group to preserve the original order
-                        $('#list').append('<li class="list-group-item" id="el' + groupId + '">…</li>');
+						// add a list entry for each group to preserve the original order
+						$('#list').append('<li class="list-group-item" id="el' + groupId + '">…</li>');
 
 						// fetch the data of the membergroup with the groupId
 						// https://demo.webling.ch/api/#membergroup-membergroup-get
 						$.ajax(domain + "/api/1/membergroup/" + groupId + "?apikey=" + apikey).then(
-						    function(group){
+							function(group){
 
-							    // display the title of the group and its id as badg
+								// display the title of the group and its id as badg
 								$('#el' + groupId).html(
-								    '<span class="pull-right">id: ' + groupId + '</span>' + group.properties.title
+									'<span class="pull-right">id: ' + groupId + '</span>' + group.properties.title
 								)
 							},
 
-                            // if an error occurs, show it on the console
-                            function(jqXHR, textStatus, errorThrown) {
-                                console.error(jqXHR, textStatus, errorThrown);
-                            }
-                        );
-                    });
+							// if an error occurs, show it on the console
+							function(jqXHR, textStatus, errorThrown) {
+								console.error(jqXHR, textStatus, errorThrown);
+							}
+						);
+					});
 				},
 
 				// if an error occurs, show it on the console
-                function(jqXHR, textStatus, errorThrown) {
-                    console.error(jqXHR, textStatus, errorThrown);
-                }
-            );
+				function(jqXHR, textStatus, errorThrown) {
+					console.error(jqXHR, textStatus, errorThrown);
+				}
+			);
 		})
 	</script>
 </head>
