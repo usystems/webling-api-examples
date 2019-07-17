@@ -25,8 +25,9 @@
 		return $data;
 	}
 
-	$memberIds = getData($domain . "/api/1/member?apikey=" . $apiKey)["objects"];
-	if (is_array($memberIds) == false) {
+	// add the "format=full" parameter to load all member details
+	$memberData = getData($domain . "/api/1/member?format=full&apikey=" . $apiKey);
+	if (is_array($memberData) == false) {
 		die("Error connectiong to API");
 	}
 ?>
@@ -49,8 +50,7 @@
 			</th>
 		</tr>
 		<?php
-			foreach ($memberIds as $memberId) {
-				$member = getData($domain . "/api/1/member/" . $memberId . "?apikey=" . $apiKey);
+			foreach ($memberData as $member) {
 				echo "<tr>";
 				foreach ($fields as $field) {
 					echo "<td>" . $member["properties"][$field] . "</td>";
