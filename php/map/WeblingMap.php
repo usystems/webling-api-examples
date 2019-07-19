@@ -84,7 +84,7 @@ class WeblingMap {
 		$address .= ', ';
 		$address .= $member["properties"][$this->config['weblingProperty']['cityName']];
 		$address .= ', ';
-		$address .= $member["properties"][$this->config['weblingProperty']['defaultCountry']];
+		$address .= $this->config['defaultCountry'];
 		return $address;
 	}
 
