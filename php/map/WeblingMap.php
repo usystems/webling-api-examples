@@ -36,7 +36,7 @@ class WeblingMap {
 
 	private function loadMemberLocation($member) {
 		$mapData = $this->getData("https://maps.googleapis.com/maps/api/geocode/json" .
-				"?address=" . urlencode($this->getAddress($member)) . "&sensor=false&key=" . $this->mapsApiKey);
+				"?address=" . urlencode($this->getAddress($member)) . "&key=" . $this->mapsApiKey);
 
 		$geometry = $this->geometryFromMapData($mapData);
 
